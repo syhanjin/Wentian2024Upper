@@ -26,6 +26,14 @@ class ChassisMotionStateChoice(int, Enum):
     Left = 0x04
     Right = 0x08
 
+    Anticlockwise = 0x03
+    Clockwise = 0x0C
+
+    ToSlope = 0x10
+    ToTop = 0x20
+    ToBottom = 0x40
+    ToRim = 0x80
+
 
 class ClawMotionStateChoice(int, Enum):
     Ready = 0x00
@@ -107,6 +115,18 @@ class Controller(Node):
         self.keyboard.key_release_callback['a'] = release
         self.keyboard.key_release_callback['s'] = release
         self.keyboard.key_release_callback['d'] = release
+        self.keyboard.key_press_callback['1'] = press
+        self.keyboard.key_press_callback['2'] = press
+        self.keyboard.key_press_callback['3'] = press
+        self.keyboard.key_press_callback['4'] = press
+        self.keyboard.key_release_callback['1'] = release
+        self.keyboard.key_release_callback['2'] = release
+        self.keyboard.key_release_callback['3'] = release
+        self.keyboard.key_release_callback['4'] = release
+        self.keyboard.key_press_callback['q'] = press
+        self.keyboard.key_press_callback['e'] = press
+        self.keyboard.key_release_callback['q'] = release
+        self.keyboard.key_release_callback['e'] = release
 
         # 夹爪状态控制
         press, release = self.claw_callback_wrapper()
@@ -315,6 +335,18 @@ class Controller(Node):
                 else:
                     self.widgets['ChassisRight'].values = ['']
                 return ChassisMotionStateChoice.Right
+            elif key == '1':
+                return ChassisMotionStateChoice.ToSlope
+            elif key == '2':
+                return ChassisMotionStateChoice.ToTop
+            elif key == '3':
+                return ChassisMotionStateChoice.ToBottom
+            elif key == '4':
+                return ChassisMotionStateChoice.ToRim
+            elif key == 'q':
+                return ChassisMotionStateChoice.Anticlockwise
+            elif key == 'e':
+                return ChassisMotionStateChoice.Clockwise
             return ChassisMotionStateChoice.Ready
 
         def press_callback(key: Key):
