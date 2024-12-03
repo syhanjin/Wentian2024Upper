@@ -213,7 +213,7 @@ class Controller(Node):
         print(data.data)
 
     chassis_states: int = 0
-    chassis_speed: int = 255
+    chassis_speed: int = 120
 
     claw_states: int = 0
     claw_speed: int = 255
